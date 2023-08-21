@@ -1,0 +1,33 @@
+name: build-test on push
+on:
+    push:
+      paths:
+        - app.py
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout repo
+          uses: actions/checkout@v2
+        
+        - name: set up python
+          uses: actions/setup-python@v2
+
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install flask
+          working-directory: .
+        - name: run code
+          run: |
+            python app.py &
+          working-directory: .
+        - name: wait for app to start
+          run: |
+            echo "going to sleep"
+            sleep 5
+          working-directory: .
+        - name: run tests
+          run: |
+            python -m unittest test_app.py
+          working-directory: .
