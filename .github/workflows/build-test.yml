@@ -17,6 +17,7 @@ jobs:
       - name: Check if App Changed
         id: check_file_changed
         run: |
+            ls -l
             diff=$(git diff --name-only HEAD^ HEAD)
             source_diff=$(echo "$diff" | grep -E '.py$')
             has_diff=$(echo "$source_diff" | wc -l)
