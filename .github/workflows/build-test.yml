@@ -2,8 +2,6 @@ name: Conditional Workflow for New Files
 #checking the conditions
 on:
   push:
-    paths:
-      - app.py
 
 jobs:
   conditional_job_check_files:
