@@ -19,10 +19,11 @@ jobs:
       - name: Check if App Changed
         id: check_file_changed
         run: |
-          diff=$(git diff --name-only HEAD^ HEAD)
-          source_diff=$(echo "$diff" | grep -E '^/' | grep -E '.py$')
-          has_diff=$(echo "$source_diff" | wc -l)
-          echo "::set-output name=app_changed::$has_diff"
+            diff=$(git diff --name-only HEAD^ HEAD)
+            source_diff=$(echo "$diff" | grep -E '^/' | grep -E '.py$')
+            has_diff=$(echo "$source_diff" | wc -l)
+            echo "::set-output name=app_changed::$has_diff"
+        shell: /usr/bin/bash -e {0}
 
   conditional_job:
     runs-on: 'ubuntu-20.04'
