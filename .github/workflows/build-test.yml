@@ -20,15 +20,16 @@ jobs:
         run: |
             ls -l
             diff=$(git diff --name-only HEAD^)
-            echo "$diff"
-            echo "$?"
-            source_diff=$(echo "$diff" | grep '.py')
-            grep_exit_status=$?  # Store the exit status of the grep command
-            echo "$grep_exit_status"
-            if [ "$grep_exit_status" -ne 0 ]; then
-              has_diff=0
+            echo "$diff" | grep -E '.py$'
+            check=$?
+            if [ "$check" -eq 0 ]; then 
+            source_diff=$(echo "$diff" | grep -E '.py$')
+            else source_diff=""
+            fi
+            if [ "$source_diff" == "" ]; then has_diff=0
             else  
-              has_diff=$(echo "$source_diff" | wc -l)
+            has_diff=$(echo "$source_diff" | wc -l)
+            echo "$has_diff" 
             fi
             echo "::set-output name=app_changed::$has_diff"
         shell: bash
