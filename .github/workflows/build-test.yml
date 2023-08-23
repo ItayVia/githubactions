@@ -22,7 +22,7 @@ jobs:
             diff=$(git diff --name-only HEAD^)
             echo "$diff" | grep -E '.py$'
             check=$?
-            if [ "$check" -eq 0 ]; then 
+            if [ "$check" == "0" ]; then 
             source_diff=$(echo "$diff" | grep -E '.py$')
             else source_diff=""
             fi
