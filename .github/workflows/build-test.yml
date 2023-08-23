@@ -1,5 +1,6 @@
 name: Conditional Workflow for New Files
 #checking the condition
+#check again
 on:
   push:
 
@@ -21,12 +22,10 @@ jobs:
             diff=$(git diff --name-only HEAD^)
             echo "$diff"
             source_diff=$(echo "$diff" | grep '.py')
-            echo "$source_diff"
-            if [ "$source_diff" == "0" ]; then
-              has_diff=0
-            else
-              has_diff=$(echo "$source_diff" | wc -l)
-              echo "$has_diff"
+            if [ $? ]; then has_diff=0
+            else  
+            has_diff=$(echo "$source_diff" | wc -l)
+            echo "$has_diff" 
             fi
             echo "::set-output name=app_changed::$has_diff"
         shell: bash
