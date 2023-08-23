@@ -22,16 +22,13 @@ jobs:
             diff=$(git diff --name-only HEAD^)
             echo "$diff"
             echo "$?"
-            echo "$diff" | grep '.py'
-            if [ "$?" -eq 0 ]; then 
             source_diff=$(echo "$diff" | grep '.py')
-            echo "$?" 
-            else source_diff=""
-            fi
-            if [ "$source_diff" == "" ]; then has_diff=0
+            grep_exit_status=$?  # Store the exit status of the grep command
+            echo "$grep_exit_status"
+            if [ "$grep_exit_status" -ne 0 ]; then
+              has_diff=0
             else  
-            has_diff=$(echo "$source_diff" | wc -l)
-            echo "$has_diff" 
+              has_diff=$(echo "$source_diff" | wc -l)
             fi
             echo "::set-output name=app_changed::$has_diff"
         shell: bash
