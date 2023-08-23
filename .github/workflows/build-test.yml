@@ -1,6 +1,5 @@
 name: Conditional Workflow for New Files
-#checking the conditions
-#another comment
+#checking the condition
 on:
   push:
 
@@ -19,7 +18,7 @@ jobs:
         id: check_file_changed
         run: |
             ls -l
-            diff=$(git diff --name-only HEAD^ HEAD)
+            diff=$(git diff --name-only HEAD^)
             source_diff=$(echo "$diff" | grep -E '.py$')
             has_diff=$(echo "$source_diff" | wc -l)
             echo "::set-output name=app_changed::$has_diff"
@@ -28,15 +27,15 @@ jobs:
   conditional_job:
     runs-on: 'ubuntu-20.04'
     needs: conditional_job_check_files
-    if: ${{ needs.conditional_job_check_files.outputs.app_changed == '1' }}
+    if: ${{ needs.conditional_job_check_files.outputs.app_changed >= '1' }}
     steps:
       - name: Run Conditional Job
         run: echo "Files have changed, testing new app"
 
   no_changes_job:
     runs-on: 'ubuntu-20.04'
+    if: failure(needs.conditional_job_check_files)
     needs: conditional_job_check_files
-    if: ${{ needs.conditional_job_check_files.outputs.app_changed != '1' }}
     steps:
       - name: No Changes Detected
         run: echo "No changes to the code."
