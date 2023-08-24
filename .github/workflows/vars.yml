@@ -1,0 +1,12 @@
+name: Check Vars and Env
+#checking the condition
+on:
+  push:
+
+jobs:
+  test-vars:
+    runs-on: 'ubuntu-22.04'
+    steps:
+        - name: Say hello 
+          run: |
+            echo ${{ env.LIRON }}
