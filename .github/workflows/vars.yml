@@ -8,6 +8,9 @@ env:
 jobs:
   test-vars:
     runs-on: 'ubuntu-22.04'
+    env:
+        test: ${{ vars.HELLO }}
+        test2: ${{ vars.HELLO }}
     steps:
         - name: checkout
           uses: actions/checkout@v2
