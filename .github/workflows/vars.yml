@@ -16,3 +16,4 @@ jobs:
             echo "${{ env.test }}"
             echo "${{ vars.test2 }}"
             echo "${{ vars.HELLO}}"
+            echo "$HELLO"
