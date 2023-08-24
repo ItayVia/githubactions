@@ -3,8 +3,8 @@ name: Check Vars and Env
 on:
   push:
 env:
-    test: ${{ vars.LIRON }}
-    test2: ${{ vars.TEST_LIRON }}
+    test: ${{ vars.HELLO }}
+    test2: ${{ vars.HELLO }}
 jobs:
   test-vars:
     runs-on: 'ubuntu-22.04'
@@ -12,4 +12,5 @@ jobs:
         - name: Say hello 
           run: |
             echo ${{ env.test }}
-            echo ${{ env.test2 }}
+            echo ${{ vars.test2 }}
+            echo ${{ vars.HELLO}}
