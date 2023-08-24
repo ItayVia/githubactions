@@ -2,11 +2,14 @@ name: Check Vars and Env
 #checking the condition
 on:
   push:
-
+env:
+    test: ${{ vars.LIRON }}
+    test2: ${{ vars.TEST_LIRON }}
 jobs:
   test-vars:
     runs-on: 'ubuntu-22.04'
     steps:
         - name: Say hello 
           run: |
-            echo ${{ env.TEST_LIRON }}
+            echo ${{ env.test }}
+            echo ${{ env.test2 }}
