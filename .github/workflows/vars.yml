@@ -9,4 +9,4 @@ jobs:
     steps:
         - name: Say hello 
           run: |
-            echo ${{ env.LIRON }}
+            echo ${{ env.TEST_LIRON }}
