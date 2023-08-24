@@ -1,12 +1,11 @@
 name: Conditional Workflow for New Files
 #checking the condition
-#check
 on:
   push:
 
 jobs:
   conditional_job_check_files:
-    runs-on: 'ubuntu-20.04'
+    runs-on: 'ubuntu-22.04'
     outputs:
       app_changed: ${{ steps.check_file_changed.outputs.app_changed }}
     steps:
@@ -24,9 +23,10 @@ jobs:
             echo "$diff" | grep -E '.py$'
             check=$?
             echo "$check"
-            if [ $check -eq 0 ]; then 
+            if [ $check -eq 1 ]; 
+            then source_diff=""
+            else 
             source_diff=$(echo "$diff" | grep -E '.py$')
-            else source_diff=""
             fi
             if [ "$source_diff" == "" ]; then has_diff=0
             else  
@@ -37,7 +37,7 @@ jobs:
         shell: bash
 
   conditional_job:
-    runs-on: 'ubuntu-20.04'
+    runs-on: 'ubuntu-22.04'
     needs: conditional_job_check_files
     if: ${{ needs.conditional_job_check_files.outputs.app_changed >= '1' }}
     steps:
@@ -45,7 +45,7 @@ jobs:
         run: echo "Files have changed, testing new app"
 
   no_changes_job:
-    runs-on: 'ubuntu-20.04'
+    runs-on: 'ubuntu-22.04'
     if: failure(needs.conditional_job_check_files)
     needs: conditional_job_check_files
     steps:
