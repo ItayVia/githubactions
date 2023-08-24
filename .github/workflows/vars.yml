@@ -11,6 +11,6 @@ jobs:
     steps:
         - name: Say hello 
           run: |
-            echo ${{ env.test }}
-            echo ${{ vars.test2 }}
-            echo ${{ vars.HELLO}}
+            echo "${{ env.test }}"
+            echo "${{ vars.test2 }}"
+            echo "${{ vars.HELLO}}"
